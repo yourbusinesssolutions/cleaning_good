@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
+import Products from './pages/Products';
 import QuoteRequest from './pages/QuoteRequest';
 import ServiceDetail from './pages/ServiceDetail';
 import Services from './pages/Services';
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
             <Route path="/services/:serviceId" element={<ServiceDetail />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/work-with-us" element={<WorkWithUs />} />
