@@ -96,18 +96,23 @@ const Navbar = () => {
                   Diensten
                   <ChevronDown size={16} className="ml-1 transition-transform group-hover:rotate-180" />
                 </Link>
-                <div className="absolute hidden group-hover:block w-56 bg-white shadow-xl rounded-lg py-3 mt-2 transition-all transform origin-top scale-95 group-hover:scale-100 z-50">
+                {/* Invisible bridge to maintain hover state */}
+                <div className="absolute left-0 top-full h-2 w-56"></div>
+                <div className="absolute left-0 top-full w-56 bg-white shadow-xl rounded-lg py-3 transition-all duration-200 transform origin-top scale-95 opacity-0 invisible group-hover:scale-100 group-hover:opacity-100 group-hover:visible group-hover:mt-2 z-50">
                   {serviceItems.map(service => (
                     <Link 
                       key={service.id} 
                       to={`/services/${service.id}`} 
-                      className="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600"
+                      className="block px-5 py-2 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                     >
                       {service.name}
                     </Link>
                   ))}
                 </div>
               </div>
+              <Link to="/products" className={`font-medium ${location.pathname === '/products' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
+                Assortiment
+              </Link>
               <Link to="/about-us" className={`font-medium ${location.pathname === '/about-us' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
                 Over Ons
               </Link>
@@ -151,6 +156,7 @@ const Navbar = () => {
                     </Link>
                   ))}
                 </div>
+                <Link to="/products" className="text-gray-700 py-2 font-medium">Assortiment</Link>
                 <Link to="/about-us" className="text-gray-700 py-2 font-medium">Over Ons</Link>
                 <Link to="/contact" className="text-gray-700 py-2 font-medium">Contact</Link>
                 <Link to="/work-with-us" className="text-gray-700 py-2 font-medium">Werken bij</Link>

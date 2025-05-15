@@ -72,6 +72,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/products" className="text-blue-200 hover:text-white transition-colors flex items-center">
+                  <span className="w-2 h-2 bg-blue-400 rounded-full inline-block mr-2"></span>Assortiment
+                </Link>
+              </li>
+              <li>
                 <Link to="/about-us" className="text-blue-200 hover:text-white transition-colors flex items-center">
                   <span className="w-2 h-2 bg-blue-400 rounded-full inline-block mr-2"></span>Over Ons
                 </Link>
