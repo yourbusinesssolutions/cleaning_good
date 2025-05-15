@@ -1,156 +1,43 @@
+// src/pages/Products.js
 import { Filter, Search } from 'lucide-react';
 import React, { useState } from 'react';
 import PageHeader from '../components/PageHeader';
+import ProductInquiryModal from '../components/ProductInquiryModal';
+import { useProducts } from '../hooks/useProducts';
 
 const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('name');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
 
-  // Product categories
-  const categories = [
-    { id: 'all', name: 'Alle producten', count: 48 },
-    { id: 'cleaning-agents', name: 'Reinigingsmiddelen', count: 15 },
-    { id: 'equipment', name: 'Schoonmaakapparatuur', count: 8 },
-    { id: 'tools', name: 'Gereedschappen', count: 12 },
-    { id: 'paper-products', name: 'Papierproducten', count: 6 },
-    { id: 'safety', name: 'Veiligheidsproducten', count: 7 }
-  ];
-
-  // Sample products data
-  const products = [
-    {
-      id: 1,
-      name: 'Professionele Allesreiniger',
-      category: 'cleaning-agents',
-      price: 12.99,
-      image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?ixlib=rb-4.0.3',
-      description: 'Krachtige allesreiniger voor dagelijks gebruik',
-      inStock: true
-    },
-    {
-      id: 2,
-      name: 'Industriële Stofzuiger',
-      category: 'equipment',
-      price: 299.99,
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3',
-      description: 'Professionele stofzuiger voor commercieel gebruik',
-      inStock: true
-    },
-    {
-      id: 3,
-      name: 'Microvezel Doeken Set',
-      category: 'tools',
-      price: 19.99,
-      image: 'https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-4.0.3',
-      description: 'Set van 10 hoogwaardige microvezel doeken',
-      inStock: true
-    },
-    {
-      id: 4,
-      name: 'Desinfecterende Handzeep',
-      category: 'cleaning-agents',
-      price: 8.99,
-      image: 'https://images.unsplash.com/photo-1584362528334-88c9d35c9c5f?ixlib=rb-4.0.3',
-      description: 'Antibacteriële handzeep voor hygiënische reiniging',
-      inStock: true
-    },
-    {
-      id: 5,
-      name: 'Vloerwisser Systeem',
-      category: 'tools',
-      price: 45.99,
-      image: 'https://images.unsplash.com/photo-1581578017426-04745e5d4d1a?ixlib=rb-4.0.3',
-      description: 'Compleet vloerwissysteem met emmer',
-      inStock: true
-    },
-    {
-      id: 6,
-      name: 'Toiletpapier Bulk',
-      category: 'paper-products',
-      price: 39.99,
-      image: 'https://images.unsplash.com/photo-1584556812952-905ffd0c611a?ixlib=rb-4.0.3',
-      description: 'Grootverpakking toiletpapier - 48 rollen',
-      inStock: true
-    },
-    {
-      id: 7,
-      name: 'Glasreiniger Spray',
-      category: 'cleaning-agents',
-      price: 6.99,
-      image: 'https://images.unsplash.com/photo-1607860108855-64acf2078987?ixlib=rb-4.0.3',
-      description: 'Streepvrije glasreiniger voor ramen en spiegels',
-      inStock: true
-    },
-    {
-      id: 8,
-      name: 'Veiligheidshandschoenen',
-      category: 'safety',
-      price: 14.99,
-      image: 'https://images.unsplash.com/photo-1582735689369-f7d7be364c1b?ixlib=rb-4.0.3',
-      description: 'Chemisch resistente handschoenen - maat L',
-      inStock: false
-    },
-    {
-      id: 9,
-      name: 'Schrobmachine',
-      category: 'equipment',
-      price: 899.99,
-      image: 'https://images.unsplash.com/photo-1635776062360-af423602aff3?ixlib=rb-4.0.3',
-      description: 'Professionele vloerschrobmachine',
-      inStock: true
-    },
-    {
-      id: 10,
-      name: 'Ontkalker',
-      category: 'cleaning-agents',
-      price: 11.99,
-      image: 'https://images.unsplash.com/photo-1607860108855-64acf2078987?ixlib=rb-4.0.3',
-      description: 'Krachtige ontkalker voor sanitair',
-      inStock: true
-    },
-    {
-      id: 11,
-      name: 'Papieren Handdoeken',
-      category: 'paper-products',
-      price: 24.99,
-      image: 'https://images.unsplash.com/photo-1605021875579-a79d016f6e73?ixlib=rb-4.0.3',
-      description: 'Zachte papieren handdoeken - 20 pakken',
-      inStock: true
-    },
-    {
-      id: 12,
-      name: 'Veiligheidsbril',
-      category: 'safety',
-      price: 9.99,
-      image: 'https://images.unsplash.com/photo-1517256673644-36ad9ca0a7fa?ixlib=rb-4.0.3',
-      description: 'Beschermende veiligheidsbril',
-      inStock: true
-    }
-  ];
-
-  // Filter products based on selected category, search term, and price range
-  const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    let matchesPrice = true;
-    if (priceRange === 'low') matchesPrice = product.price < 20;
-    else if (priceRange === 'medium') matchesPrice = product.price >= 20 && product.price < 100;
-    else if (priceRange === 'high') matchesPrice = product.price >= 100;
-    
-    return matchesCategory && matchesSearch && matchesPrice;
+  const { products, categories, loading, error, totalCount } = useProducts({
+    category: selectedCategory,
+    search: searchTerm,
+    price_range: priceRange,
+    ordering: sortBy
   });
 
-  // Sort products
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'name') return a.name.localeCompare(b.name);
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
-    return 0;
-  });
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setIsInquiryModalOpen(true);
+  };
+
+  const handleInquiryClose = () => {
+    setIsInquiryModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-20 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Er is iets misgegaan</h2>
+        <p className="text-gray-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -287,7 +174,7 @@ const Products = () => {
               <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <p className="text-gray-600">
-                    {sortedProducts.length} producten gevonden
+                    {loading ? 'Producten laden...' : `${totalCount} producten gevonden`}
                   </p>
                   <div className="flex items-center gap-2">
                     <label className="text-sm text-gray-600">Sorteer op:</label>
@@ -305,45 +192,61 @@ const Products = () => {
               </div>
               
               {/* Products */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedProducts.map(product => (
-                  <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div className="h-48 overflow-hidden">
-                      <img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-gray-800 mb-2">{product.name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                      <div className="flex justify-between items-center mb-4">
-                        <span className="text-2xl font-bold text-blue-600">€{product.price}</span>
-                        <span className={`text-sm px-2 py-1 rounded-full ${
-                          product.inStock 
-                            ? 'bg-green-100 text-green-700' 
-                            : 'bg-red-100 text-red-700'
-                        }`}>
-                          {product.inStock ? 'Op voorraad' : 'Uitverkocht'}
-                        </span>
+              {loading ? (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="bg-white rounded-xl shadow-lg overflow-hidden animate-pulse">
+                      <div className="h-48 bg-gray-300"></div>
+                      <div className="p-6">
+                        <div className="h-4 bg-gray-300 rounded mb-3"></div>
+                        <div className="h-3 bg-gray-300 rounded mb-4"></div>
+                        <div className="h-8 bg-gray-300 rounded"></div>
                       </div>
-                      <button 
-                        className={`w-full py-2 px-4 rounded-lg font-medium transition-all ${
-                          product.inStock
-                            ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        }`}
-                        disabled={!product.inStock}
-                      >
-                        {product.inStock ? 'Meer informatie' : 'Niet beschikbaar'}
-                      </button>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {products.map(product => (
+                    <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                      <div className="h-48 overflow-hidden">
+                        <img 
+                          src={product.image_url || 'https://via.placeholder.com/400x300?text=No+Image'} 
+                          alt={product.name}
+                          className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-lg font-bold text-gray-800 mb-2">{product.name}</h3>
+                        <p className="text-gray-600 text-sm mb-4">{product.description}</p>
+                        <div className="flex justify-between items-center mb-4">
+                          <span className="text-2xl font-bold text-blue-600">€{parseFloat(product.price).toFixed(2)}</span>
+                          <span className={`text-sm px-2 py-1 rounded-full ${
+                            product.in_stock 
+                              ? 'bg-green-100 text-green-700' 
+                              : 'bg-red-100 text-red-700'
+                          }`}>
+                            {product.in_stock ? 'Op voorraad' : 'Uitverkocht'}
+                          </span>
+                        </div>
+                        <button 
+                          className={`w-full py-2 px-4 rounded-lg font-medium transition-all ${
+                            product.in_stock
+                              ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          }`}
+                          disabled={!product.in_stock}
+                          onClick={() => handleProductClick(product)}
+                        >
+                          {product.in_stock ? 'Meer informatie' : 'Niet beschikbaar'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               
-              {sortedProducts.length === 0 && (
+              {!loading && products.length === 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                   <p className="text-gray-600 text-lg">
                     Geen producten gevonden die aan uw criteria voldoen.
@@ -390,6 +293,15 @@ const Products = () => {
           </div>
         </div>
       </section>
+
+      {/* Product Inquiry Modal */}
+      {selectedProduct && (
+        <ProductInquiryModal
+          isOpen={isInquiryModalOpen}
+          onClose={handleInquiryClose}
+          product={selectedProduct}
+        />
+      )}
     </>
   );
 };

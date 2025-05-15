@@ -1,5 +1,6 @@
 import { CheckCircle, Send } from 'lucide-react';
 import React, { useState } from 'react';
+import ContactService from '../services/contactService';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const ContactForm = () => {
   
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState(null);
   
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -50,12 +53,19 @@ const ContactForm = () => {
     return Object.keys(newErrors).length === 0;
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError(null);
     
-    if (validateForm()) {
-      // In a real application, you would submit the form data to your server here
-      console.log('Form submitted:', formData);
+    if (!validateForm()) {
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      
+      // Send to API
+      const response = await ContactService.sendContactMessage(formData);
       
       // Show success message
       setSubmitted(true);
@@ -68,6 +78,11 @@ const ContactForm = () => {
         subject: '',
         message: ''
       });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
   
@@ -106,6 +121,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className={`w-full px-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="Uw volledige naam"
+          disabled={isSubmitting}
         />
         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
@@ -121,6 +137,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="uw@email.nl"
+          disabled={isSubmitting}
         />
         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
@@ -136,6 +153,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Uw telefoonnummer"
+          disabled={isSubmitting}
         />
       </div>
       
@@ -150,6 +168,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Waar kunnen we u mee helpen?"
+          disabled={isSubmitting}
         />
       </div>
       
@@ -164,16 +183,36 @@ const ContactForm = () => {
           rows="4"
           className={`w-full px-4 py-3 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="Typ hier uw bericht..."
+          disabled={isSubmitting}
         ></textarea>
         {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
       </div>
       
+      {apiError && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4">
+          <p className="text-red-700">{apiError}</p>
+        </div>
+      )}
+      
       <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center justify-center"
+        disabled={isSubmitting}
+        className={`${
+          isSubmitting 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-blue-600 hover:bg-blue-700'
+        } text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform ${
+          isSubmitting ? '' : 'hover:-translate-y-1'
+        } shadow-lg hover:shadow-xl flex items-center justify-center`}
       >
-        <span className="mr-2">VERSTUREN</span>
-        <Send size={18} />
+        {isSubmitting ? (
+          <span>Bezig met verzenden...</span>
+        ) : (
+          <>
+            <span className="mr-2">VERSTUREN</span>
+            <Send size={18} />
+          </>
+        )}
       </button>
     </form>
   );

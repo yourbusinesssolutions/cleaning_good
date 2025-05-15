@@ -1,5 +1,6 @@
 import { CheckCircle, Send } from 'lucide-react';
 import React, { useState } from 'react';
+import ContactService from '../services/contactService';
 
 const QuoteForm = () => {
   const [formData, setFormData] = useState({
@@ -7,18 +8,22 @@ const QuoteForm = () => {
     email: '',
     phone: '',
     company: '',
-    serviceType: '',
+    service_type: '',  // Changed from serviceType to match backend
     message: ''
   });
   
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState(null);
   
   const handleInputChange = (e) => {
     const { id, value } = e.target;
+    // Handle the special case for service_type
+    const fieldName = id === 'serviceType' ? 'service_type' : id;
     setFormData(prev => ({
       ...prev,
-      [id]: value
+      [fieldName]: value
     }));
     
     // Clear error when user starts typing
@@ -47,16 +52,27 @@ const QuoteForm = () => {
       newErrors.phone = 'Telefoonnummer is verplicht';
     }
     
+    if (!formData.message.trim()) {
+      newErrors.message = 'Beschrijf alstublieft uw schoonmaakwensen';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError(null);
     
-    if (validateForm()) {
-      // In a real application, you would submit the form data to your server here
-      console.log('Form submitted:', formData);
+    if (!validateForm()) {
+      return;
+    }
+    
+    try {
+      setIsSubmitting(true);
+      
+      // Send to API
+      const response = await ContactService.sendQuoteRequest(formData);
       
       // Show success message
       setSubmitted(true);
@@ -67,9 +83,14 @@ const QuoteForm = () => {
         email: '',
         phone: '',
         company: '',
-        serviceType: '',
+        service_type: '',
         message: ''
       });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
   
@@ -108,6 +129,7 @@ const QuoteForm = () => {
           onChange={handleInputChange}
           className={`w-full px-4 py-3 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="Uw volledige naam"
+          disabled={isSubmitting}
         />
         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
@@ -123,6 +145,7 @@ const QuoteForm = () => {
           onChange={handleInputChange}
           className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="uw@email.nl"
+          disabled={isSubmitting}
         />
         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
@@ -138,6 +161,7 @@ const QuoteForm = () => {
           onChange={handleInputChange}
           className={`w-full px-4 py-3 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="Uw telefoonnummer"
+          disabled={isSubmitting}
         />
         {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
       </div>
@@ -153,6 +177,7 @@ const QuoteForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Uw bedrijfsnaam (optioneel)"
+          disabled={isSubmitting}
         />
       </div>
       
@@ -162,9 +187,10 @@ const QuoteForm = () => {
         </label>
         <select
           id="serviceType"
-          value={formData.serviceType}
+          value={formData.service_type}
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+          disabled={isSubmitting}
         >
           <option value="">Selecteer type service</option>
           <option value="daily">Dagelijkse schoonmaak</option>
@@ -178,24 +204,45 @@ const QuoteForm = () => {
       
       <div>
         <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
-          Uw bericht
+          Uw bericht <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
           value={formData.message}
           onChange={handleInputChange}
           rows="5"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className={`w-full px-4 py-3 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
           placeholder="Beschrijf uw schoonmaakwensen..."
+          disabled={isSubmitting}
         ></textarea>
+        {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
       </div>
+      
+      {apiError && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4">
+          <p className="text-red-700">{apiError}</p>
+        </div>
+      )}
       
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center justify-center"
+        disabled={isSubmitting}
+        className={`w-full ${
+          isSubmitting 
+            ? 'bg-gray-400 cursor-not-allowed' 
+            : 'bg-blue-600 hover:bg-blue-700'
+        } text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform ${
+          isSubmitting ? '' : 'hover:-translate-y-1'
+        } shadow-lg hover:shadow-xl flex items-center justify-center`}
       >
-        <span className="mr-2">OFFERTE AANVRAGEN</span>
-        <Send size={18} />
+        {isSubmitting ? (
+          <span>Bezig met verzenden...</span>
+        ) : (
+          <>
+            <span className="mr-2">OFFERTE AANVRAGEN</span>
+            <Send size={18} />
+          </>
+        )}
       </button>
       
       <p className="text-gray-600 text-center text-sm pt-4">
