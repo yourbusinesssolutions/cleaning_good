@@ -1,85 +1,46 @@
 import { Award, Briefcase, CheckCircle, Mail, Phone, Send, Users, X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageHeader from '../components/PageHeader';
+import HRService from '../services/hrService';
 
 const WorkWithUs = () => {
-  const [vacancies] = useState([
-    {
-      id: 1,
-      title: 'Schoonmaakmedewerker',
-      location: 'Alphen aan den Rijn',
-      type: 'Part-time / Full-time',
-      description: 'Wij zijn op zoek naar enthousiaste schoonmaakmedewerkers voor de dagelijkse schoonmaak van kantoren en bedrijfspanden in de regio Alphen aan den Rijn.',
-      responsibilities: [
-        'Uitvoeren van dagelijkse schoonmaakwerkzaamheden',
-        'Stofzuigen, dweilen en afstoffen',
-        'Reinigen van sanitaire voorzieningen',
-        'Reinigen van keukens en pantry',
-        'Legen van afvalbakken'
-      ],
-      requirements: [
-        'Ervaring in schoonmaak is een pre, maar niet vereist',
-        'Een positieve en klantvriendelijke instelling',
-        'Oog voor detail en kwaliteit',
-        'Betrouwbaar en zelfstandig kunnen werken',
-        'Goede beheersing van de Nederlandse taal'
-      ]
-    },
-    {
-      id: 2,
-      title: 'Voorman/Voorvrouw Schoonmaak',
-      location: 'Regio Leiden/Alphen aan den Rijn',
-      type: 'Full-time',
-      description: 'Voor ons team zoeken wij een ervaren voorman/voorvrouw die leiding kan geven aan een team van schoonmaakmedewerkers en verantwoordelijk is voor de kwaliteitscontrole.',
-      responsibilities: [
-        'Aansturen en begeleiden van een team schoonmaakmedewerkers',
-        'Uitvoeren van kwaliteitscontroles',
-        'Contact onderhouden met klanten',
-        'Oplossen van problemen en klachtenafhandeling',
-        'Rapporteren aan de objectleider'
-      ],
-      requirements: [
-        'Minimaal 2 jaar ervaring in de schoonmaakbranche',
-        'Leidinggevende capaciteiten',
-        'Rijbewijs B',
-        'Goede communicatieve vaardigheden',
-        'Klantgericht en oplossingsgericht'
-      ]
-    },
-    {
-      id: 3,
-      title: 'Specialistisch Reiniger',
-      location: 'Zuid-Holland',
-      type: 'Full-time',
-      description: 'Voor onze afdeling specialistische reiniging zijn wij op zoek naar een ervaren reiniger voor het uitvoeren van specialistische schoonmaakwerkzaamheden.',
-      responsibilities: [
-        'Uitvoeren van glasbewassing',
-        'Gevelreiniging en -impregnatie',
-        'Vloeronderhoud en -reiniging',
-        'Werken met hoogwerkers',
-        'Graffiti verwijdering'
-      ],
-      requirements: [
-        'Minimaal 1 jaar ervaring met specialistische reiniging',
-        'In bezit van VCA certificaat',
-        'Rijbewijs B',
-        'Geen hoogtevrees',
-        'Fysiek in goede conditie'
-      ]
-    }
-  ]);
-  
+  const [vacancies, setVacancies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeVacancy, setActiveVacancy] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     vacancy: '',
+    vacancy_title: '',
     message: '',
-    file: null
+    cv_file: null
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState(null);
+  
+  // Fetch vacancies from API
+  useEffect(() => {
+    loadVacancies();
+  }, []);
+  
+  const loadVacancies = async () => {
+    try {
+      setLoading(true);
+      const response = await HRService.getVacancies();
+      // Handle paginated response
+      const vacanciesData = response.results || response;
+      setVacancies(vacanciesData);
+    } catch (err) {
+      setError('Failed to load vacancies');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -102,7 +63,7 @@ const WorkWithUs = () => {
     if (file) {
       setFormData(prev => ({
         ...prev,
-        file: file
+        cv_file: file
       }));
     }
   };
@@ -124,37 +85,58 @@ const WorkWithUs = () => {
       newErrors.phone = 'Telefoonnummer is verplicht';
     }
     
-    if (!formData.vacancy) {
-      newErrors.vacancy = 'Selecteer een vacature';
-    }
-    
-    if (!formData.file) {
-      newErrors.file = 'Upload uw CV';
+    if (!formData.cv_file) {
+      newErrors.cv_file = 'Upload uw CV';
     }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError(null);
     
     if (validateForm()) {
-      // In a real application, you would submit the form data to your server here
-      console.log('Application submitted:', formData);
-      
-      // Show success message
-      setFormSubmitted(true);
-      
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        vacancy: '',
-        message: '',
-        file: null
-      });
+      try {
+        setIsSubmitting(true);
+        
+        // Submit to API
+        const applicationData = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          cv_file: formData.cv_file,
+          vacancy: activeVacancy?.id || null,
+          vacancy_title: activeVacancy?.title || 'Open sollicitatie'
+        };
+        
+        await HRService.submitApplication(applicationData);
+        
+        // Show success message
+        setFormSubmitted(true);
+        
+        // Reset form after submission
+        setTimeout(() => {
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            vacancy: '',
+            vacancy_title: '',
+            message: '',
+            cv_file: null
+          });
+          setFormSubmitted(false);
+          closeVacancy();
+        }, 3000);
+      } catch (error) {
+        console.error('Error submitting application:', error);
+        setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
   
@@ -163,13 +145,57 @@ const WorkWithUs = () => {
     // Set the selected vacancy in the form
     setFormData(prev => ({
       ...prev,
-      vacancy: vacancy.title
+      vacancy: vacancy.id || '',
+      vacancy_title: vacancy.title
     }));
   };
   
   const closeVacancy = () => {
     setActiveVacancy(null);
   };
+  
+  if (loading) {
+    return (
+      <>
+        <PageHeader 
+          title="Werken bij Allround Cleaning" 
+          subtitle="Word onderdeel van ons team en help ons om onze klanten de beste schoonmaakdiensten te bieden"
+          breadcrumbs={[
+            { text: 'Werken bij' }
+          ]}
+          bgImage="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3"
+        />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <p className="text-gray-600">Vacatures laden...</p>
+        </div>
+      </>
+    );
+  }
+  
+  if (error) {
+    return (
+      <>
+        <PageHeader 
+          title="Werken bij Allround Cleaning" 
+          subtitle="Word onderdeel van ons team en help ons om onze klanten de beste schoonmaakdiensten te bieden"
+          breadcrumbs={[
+            { text: 'Werken bij' }
+          ]}
+          bgImage="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3"
+        />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Er is iets misgegaan</h2>
+          <p className="text-gray-600">{error}</p>
+          <button 
+            onClick={loadVacancies} 
+            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium"
+          >
+            Opnieuw proberen
+          </button>
+        </div>
+      </>
+    );
+  }
   
   return (
     <>
@@ -227,35 +253,43 @@ const WorkWithUs = () => {
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Actuele vacatures</h2>
               
-              <div className="space-y-6">
-                {vacancies.map(vacancy => (
-                  <div 
-                    key={vacancy.id} 
-                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all cursor-pointer"
-                    onClick={() => openVacancy(vacancy)}
-                  >
-                    <div className="p-6">
-                      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-800 mb-2">{vacancy.title}</h3>
-                          <div className="flex flex-wrap gap-3 mb-4">
-                            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                              {vacancy.location}
-                            </span>
-                            <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                              {vacancy.type}
-                            </span>
+              {vacancies.length > 0 ? (
+                <div className="space-y-6">
+                  {vacancies.map(vacancy => (
+                    <div 
+                      key={vacancy.id} 
+                      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all cursor-pointer"
+                      onClick={() => openVacancy(vacancy)}
+                    >
+                      <div className="p-6">
+                        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+                          <div>
+                            <h3 className="text-xl font-bold text-gray-800 mb-2">{vacancy.title}</h3>
+                            <div className="flex flex-wrap gap-3 mb-4">
+                              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                                {vacancy.location}
+                              </span>
+                              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                {vacancy.type}
+                              </span>
+                            </div>
                           </div>
+                          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all mt-4 md:mt-0">
+                            Bekijk details
+                          </button>
                         </div>
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all mt-4 md:mt-0">
-                          Bekijk details
-                        </button>
+                        <p className="text-gray-600">{vacancy.description}</p>
                       </div>
-                      <p className="text-gray-600">{vacancy.description}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-gray-50 rounded-xl p-8 text-center">
+                  <p className="text-gray-600">
+                    Momenteel hebben we geen openstaande vacatures, maar u kunt altijd een open sollicitatie sturen.
+                  </p>
+                </div>
+              )}
             </div>
             
             <div className="bg-gray-50 rounded-xl p-8 mb-16">
@@ -265,7 +299,7 @@ const WorkWithUs = () => {
               </p>
               <button 
                 className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition-all"
-                onClick={() => openVacancy({ id: 0, title: 'Open sollicitatie' })}
+                onClick={() => openVacancy({ id: null, title: 'Open sollicitatie' })}
               >
                 Open sollicitatie versturen
               </button>
@@ -312,7 +346,7 @@ const WorkWithUs = () => {
             </div>
             
             <div className="p-6">
-              {activeVacancy.id !== 0 && (
+              {activeVacancy.id && (
                 <>
                   <div className="flex flex-wrap gap-3 mb-6">
                     <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -326,49 +360,47 @@ const WorkWithUs = () => {
                   <div className="prose max-w-none mb-8">
                     <p className="text-lg">{activeVacancy.description}</p>
                     
-                    <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Werkzaamheden</h4>
-                    <ul className="space-y-2">
-                      {activeVacancy.responsibilities.map((item, index) => (
-                        <li key={index} className="flex items-start">
-                          <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {activeVacancy.responsibilities && activeVacancy.responsibilities.length > 0 && (
+                      <>
+                        <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Werkzaamheden</h4>
+                        <ul className="space-y-2">
+                          {activeVacancy.responsibilities.map((item, index) => (
+                            <li key={index} className="flex items-start">
+                              <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                     
-                    <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Wij vragen</h4>
-                    <ul className="space-y-2">
-                      {activeVacancy.requirements.map((item, index) => (
-                        <li key={index} className="flex items-start">
-                          <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {activeVacancy.requirements && activeVacancy.requirements.length > 0 && (
+                      <>
+                        <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Wij vragen</h4>
+                        <ul className="space-y-2">
+                          {activeVacancy.requirements.map((item, index) => (
+                            <li key={index} className="flex items-start">
+                              <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                     
-                    <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Wij bieden</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                        <span>Een marktconform salaris afhankelijk van ervaring</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                        <span>Een prettige werksfeer in een professioneel team</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                        <span>Mogelijkheden voor doorgroei en ontwikkeling</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                        <span>Goede secundaire arbeidsvoorwaarden</span>
-                      </li>
-                      <li className="flex items-start">
-                        <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
-                        <span>Werken in een groeiend en ambitieus bedrijf</span>
-                      </li>
-                    </ul>
+                    {activeVacancy.benefits && activeVacancy.benefits.length > 0 && (
+                      <>
+                        <h4 className="text-xl font-bold text-gray-800 mt-8 mb-4">Wij bieden</h4>
+                        <ul className="space-y-2">
+                          {activeVacancy.benefits.map((item, index) => (
+                            <li key={index} className="flex items-start">
+                              <CheckCircle className="text-green-500 mr-3 mt-1 flex-shrink-0" size={18} />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                   </div>
                 </>
               )}
@@ -424,13 +456,13 @@ const WorkWithUs = () => {
                     </div>
                     
                     <div>
-                      <label htmlFor="vacancy" className="block text-gray-700 font-medium mb-2">
+                      <label htmlFor="vacancy_title" className="block text-gray-700 font-medium mb-2">
                         Vacature <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
-                        id="vacancy"
-                        value={formData.vacancy}
+                        id="vacancy_title"
+                        value={formData.vacancy_title}
                         readOnly
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
                       />
@@ -451,28 +483,41 @@ const WorkWithUs = () => {
                     </div>
                     
                     <div>
-                      <label htmlFor="file" className="block text-gray-700 font-medium mb-2">
+                      <label htmlFor="cv_file" className="block text-gray-700 font-medium mb-2">
                         CV uploaden <span className="text-red-500">*</span>
                       </label>
-                      <div className={`w-full px-4 py-3 border ${errors.file ? 'border-red-500' : 'border-gray-300'} rounded-lg`}>
+                      <div className={`w-full px-4 py-3 border ${errors.cv_file ? 'border-red-500' : 'border-gray-300'} rounded-lg`}>
                         <input
                           type="file"
-                          id="file"
+                          id="cv_file"
                           onChange={handleFileChange}
                           className="text-gray-700"
                           accept=".pdf,.doc,.docx"
                         />
                       </div>
                       <p className="text-gray-500 text-sm mt-1">Toegestane formaten: PDF, DOC, DOCX (max. 5MB)</p>
-                      {errors.file && <p className="text-red-500 text-sm mt-1">{errors.file}</p>}
+                      {errors.cv_file && <p className="text-red-500 text-sm mt-1">{errors.cv_file}</p>}
                     </div>
+                    
+                    {apiError && (
+                      <div className="bg-red-50 border-l-4 border-red-400 p-4">
+                        <p className="text-red-700">{apiError}</p>
+                      </div>
+                    )}
                     
                     <button
                       type="submit"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center"
+                      disabled={isSubmitting}
+                      className={`w-full ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center`}
                     >
-                      <span className="mr-2">Sollicitatie versturen</span>
-                      <Send size={18} />
+                      {isSubmitting ? (
+                        <span>Bezig met verzenden...</span>
+                      ) : (
+                        <>
+                          <span className="mr-2">Sollicitatie versturen</span>
+                          <Send size={18} />
+                        </>
+                      )}
                     </button>
                   </form>
                 </>
