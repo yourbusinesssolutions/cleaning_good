@@ -1,4 +1,4 @@
-import { ChevronDown, Facebook, Mail, Menu, Phone, Star, Twitter, X, Youtube } from 'lucide-react';
+import { ChevronDown, Menu, Star, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -37,33 +37,6 @@ const Navbar = () => {
 
   return (
     <header className="w-full">
-      {/* Top Info Bar */}
-      <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-3">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-6">
-            <a href="tel:0172-645574" className="flex items-center hover:text-blue-200 transition-colors">
-              <Phone size={16} className="mr-2" />
-              <span>0172-645574</span>
-            </a>
-            <a href="mailto:info@allround-cleaning.nl" className="hidden md:flex items-center hover:text-blue-200 transition-colors">
-              <Mail size={16} className="mr-2" />
-              <span>info@allround-cleaning.nl</span>
-            </a>
-          </div>
-          <div className="flex space-x-5">
-            <a href="#" className="hover:text-blue-200 transition-colors transform hover:scale-110">
-              <Facebook size={16} />
-            </a>
-            <a href="#" className="hover:text-blue-200 transition-colors transform hover:scale-110">
-              <Twitter size={16} />
-            </a>
-            <a href="#" className="hover:text-blue-200 transition-colors transform hover:scale-110">
-              <Youtube size={16} />
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/* Main Navigation */}
       <div className={`bg-white shadow-lg transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5'}`}>
         <div className="container mx-auto px-4">
