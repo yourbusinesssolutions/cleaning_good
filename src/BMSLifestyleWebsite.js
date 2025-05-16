@@ -1,5 +1,6 @@
 import { Award, CheckCircle, ChevronDown, Clock, Facebook, Mail, Menu, Phone, Send, Shield, Sparkles, Star, Twitter, X, Youtube } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import logo from "../../assets/images/logo.png";
 import HeroSliders from './HeroSliders';
 
 const CleaningWebsite = () => {
@@ -100,7 +101,7 @@ const CleaningWebsite = () => {
             <div className="flex items-center">
               {/* Logo Image */}
               <img 
-                src="https://adxservices.xyz/wp-content/uploads/2019/10/image001.png" 
+                src={logo}
                 alt="Allround Cleaning Logo"
                 className="h-20 md:h-20 w-auto"
               />
