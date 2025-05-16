@@ -168,7 +168,7 @@ const QuoteRequest = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6">Klanten over ons</h2>
-            <div className="bg-white bg-opacity-10 rounded-xl p-8 mb-8">
+            {/* <div className="bg-white bg-opacity-10 rounded-xl p-8 mb-8">
               <div className="flex justify-center mb-4">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -183,7 +183,7 @@ const QuoteRequest = () => {
                 <p className="font-bold">Jan de Vries</p>
                 <p className="text-blue-200">Facility Manager, ABC Kantoren</p>
               </div>
-            </div>
+            </div> */}
             <p className="text-xl text-blue-100 mb-8">
               Sluit u aan bij onze tevreden klanten en vraag vandaag nog een vrijblijvende offerte aan.
             </p>

@@ -51,7 +51,50 @@ const Home = () => {
       {/* Hero Section */}
       <HeroSlider />
       
-      {/* Benefits Section */}
+      {/* Services Section - MOVED UP */}
+      <section id="diensten" className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600 skew-y-3 transform origin-top-right"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-1 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
+              PROFESSIONELE DIENSTEN
+            </span>
+            <h2 className="text-4xl font-bold text-white mb-4">Onze Diensten</h2>
+            <p className="text-blue-100 max-w-2xl mx-auto">
+              Wij bieden een compleet pakket aan schoonmaakdiensten, altijd afgestemd op uw wensen en behoeften.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map(service => (
+              <ServiceCard 
+                key={service.id}
+                icon={service.icon}
+                title={service.title}
+                description={service.description}
+                link={`/services/${service.id}`}
+                lightMode={false}
+              />
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Link 
+              to="/services" 
+              className="inline-flex items-center bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
+            >
+              <span className="mr-2">Bekijk alle diensten</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
+      </section>
+      
+      {/* Benefits Section - MOVED DOWN */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -150,49 +193,6 @@ const Home = () => {
         </div>
       </section>
       
-      {/* Services Section */}
-      <section id="diensten" className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600 skew-y-3 transform origin-top-right"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
-              PROFESSIONELE DIENSTEN
-            </span>
-            <h2 className="text-4xl font-bold text-white mb-4">Onze Diensten</h2>
-            <p className="text-blue-100 max-w-2xl mx-auto">
-              Wij bieden een compleet pakket aan schoonmaakdiensten, altijd afgestemd op uw wensen en behoeften.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map(service => (
-              <ServiceCard 
-                key={service.id}
-                icon={service.icon}
-                title={service.title}
-                description={service.description}
-                link={`/services/${service.id}`}
-                lightMode={false}
-              />
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              to="/services" 
-              className="inline-flex items-center bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
-            >
-              <span className="mr-2">Bekijk alle diensten</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
-      </section>
-      
       {/* Partner Brands */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -228,13 +228,16 @@ const Home = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* CTA/Quote Request Section - UPDATED WITH 24-HOUR RESPONSE TIME */}
       <section className="py-20 bg-blue-600">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Klaar om samen te werken?</h2>
-            <p className="text-xl text-blue-100 mb-10">
+            <p className="text-xl text-blue-100 mb-4">
               Vraag vandaag nog een vrijblijvende offerte aan en ontdek hoe wij uw schoonmaakuitdagingen kunnen oplossen.
+            </p>
+            <p className="text-xl text-blue-100 mb-10">
+              <strong>Binnen 24 uur reactie</strong> op uw offerte aanvraag!
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Link 
