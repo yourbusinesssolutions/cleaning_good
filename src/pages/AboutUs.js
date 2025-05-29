@@ -62,11 +62,21 @@ const AboutUs = () => {
             <div className="grid md:grid-cols-3 gap-10">
               <div className="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 transform hover:-translate-y-2">
                 <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-white">
+                  <Users size={32} />
+                </div>
+                <h3 className="text-xl font-bold mb-4">Persoonlijke aanpak</h3>
+                <p className="text-blue-100">
+                  We luisteren naar uw specifieke wensen en stemmen onze dienstverlening daarop af. Elke klant krijgt persoonlijke aandacht en maatwerk.
+                </p>
+              </div>
+              
+              <div className="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 transform hover:-translate-y-2">
+                <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-white">
                   <Target size={32} />
                 </div>
-                <h3 className="text-xl font-bold mb-4">Kwaliteit</h3>
+                <h3 className="text-xl font-bold mb-4">Kwaliteitscontrole</h3>
                 <p className="text-blue-100">
-                  We streven naar uitmuntendheid in alles wat we doen. Van de producten die we gebruiken tot de mensen die we aannemen - kwaliteit staat voorop.
+                  Onze strenge kwaliteitscontroles garanderen consistent hoge standaarden. We voeren regelmatige checks uit en vragen actief om feedback.
                 </p>
               </div>
               
@@ -74,19 +84,19 @@ const AboutUs = () => {
                 <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-white">
                   <Award size={32} />
                 </div>
-                <h3 className="text-xl font-bold mb-4">Integriteit</h3>
+                <h3 className="text-xl font-bold mb-4">Duurzaamheid</h3>
                 <p className="text-blue-100">
-                  We handelen altijd eerlijk, transparant en ethisch. We doen wat we beloven en nemen verantwoordelijkheid voor ons werk.
+                  We gebruiken milieuvriendelijke producten en methoden. Onze focus ligt op het verminderen van onze ecologische voetafdruk voor een schonere toekomst.
                 </p>
               </div>
               
               <div className="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 transform hover:-translate-y-2">
                 <div className="w-16 h-16 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mb-6 text-white">
-                  <Users size={32} />
+                  <Calendar size={32} />
                 </div>
-                <h3 className="text-xl font-bold mb-4">Samenwerking</h3>
+                <h3 className="text-xl font-bold mb-4">Flexibiliteit</h3>
                 <p className="text-blue-100">
-                  We geloven in het opbouwen van sterke, langdurige relaties met onze klanten en medewerkers, gebaseerd op wederzijds respect en vertrouwen.
+                  We passen ons aan aan uw werktijden en specifieke omstandigheden. Onze diensten evolueren mee met uw veranderende behoeften.
                 </p>
               </div>
             </div>
@@ -108,7 +118,6 @@ const AboutUs = () => {
               <CountItem value={20} label="Jaren ervaring" suffix="+" />
               <CountItem value={500} label="Tevreden klanten" suffix="+" />
               <CountItem value={50} label="Professionele medewerkers" suffix="+" />
-              <CountItem value={98} label="Klantretentie" suffix="%" />
             </div>
             
             <div className="grid md:grid-cols-2 gap-10">
@@ -208,7 +217,7 @@ const AboutUs = () => {
                 <div className="md:w-3/4 md:pl-8 text-left">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Oprichting</h3>
                   <p className="text-gray-600">
-                    Allround Cleaning Service werd opgericht door Jan en Petra de Vries met een kleine ploeg van 3 medewerkers, voornamelijk gericht op kantoorschoonmaak in de regio.
+                    Allround Cleaning Service werd in 2002 opgericht door Driss Bakkali. Wat begon als een kleinschalige schoonmaakoperatie tijdens avonden in zijn oude basisschool groeide uit tot een serieuze onderneming die scholen, kantoren en industrie bedient.
                   </p>
                 </div>
               </div>
@@ -218,12 +227,27 @@ const AboutUs = () => {
                   <div className="bg-blue-100 text-blue-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
                     <Calendar size={40} />
                   </div>
-                  <div className="text-xl font-bold text-blue-600 mt-2">2007</div>
+                  <div className="text-xl font-bold text-blue-600 mt-2">2004</div>
                 </div>
                 <div className="md:w-3/4 md:pl-8 text-left">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">Uitbreiding dienstverlening</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Eerste kantoor</h3>
                   <p className="text-gray-600">
-                    Uitbreiding van onze dienstverlening met specialistische reiniging en facilitaire diensten. Het personeelsbestand groeide naar 15 medewerkers.
+                    Verhuizing naar het eerste kantoor aan de Vromade in Bodegraven, een belangrijke stap in de professionalisering van het bedrijf.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row items-center">
+                <div className="md:w-1/4 mb-4 md:mb-0">
+                  <div className="bg-blue-100 text-blue-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
+                    <Calendar size={40} />
+                  </div>
+                  <div className="text-xl font-bold text-blue-600 mt-2">2006</div>
+                </div>
+                <div className="md:w-3/4 md:pl-8 text-left">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Samenwerking met scholen</h3>
+                  <p className="text-gray-600">
+                    Succesvolle samenwerking met een schoolgemeenschap, wat leidde tot uitbreiding van het team en verdere groei.
                   </p>
                 </div>
               </div>
@@ -236,9 +260,9 @@ const AboutUs = () => {
                   <div className="text-xl font-bold text-blue-600 mt-2">2012</div>
                 </div>
                 <div className="md:w-3/4 md:pl-8 text-left">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">Verhuizing naar nieuw hoofdkantoor</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Verdere groei</h3>
                   <p className="text-gray-600">
-                    Verhuizing naar ons huidige hoofdkantoor met meer ruimte voor kantoor, opslag en training. Introductie van onze Allround Service Plus formule.
+                    Uitbreiding van de activiteiten door samenwerkingen met meerdere scholen, wat het bedrijf verder versterkte.
                   </p>
                 </div>
               </div>
@@ -248,12 +272,27 @@ const AboutUs = () => {
                   <div className="bg-blue-100 text-blue-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
                     <Calendar size={40} />
                   </div>
-                  <div className="text-xl font-bold text-blue-600 mt-2">2018</div>
+                  <div className="text-xl font-bold text-blue-600 mt-2">2016</div>
                 </div>
                 <div className="md:w-3/4 md:pl-8 text-left">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">Duurzame innovatie</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Nieuwe locatie</h3>
                   <p className="text-gray-600">
-                    Introductie van ons duurzaamheidsprogramma met focus op milieuvriendelijke reinigingsproducten en -methoden, en het verminderen van onze ecologische voetafdruk.
+                    Verhuizing naar de huidige, grotere locatie aan de Europaweg in Bodegraven, met meer ruimte voor het groeiende team.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col md:flex-row items-center">
+                <div className="md:w-1/4 mb-4 md:mb-0">
+                  <div className="bg-blue-100 text-blue-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
+                    <Calendar size={40} />
+                  </div>
+                  <div className="text-xl font-bold text-blue-600 mt-2">2021</div>
+                </div>
+                <div className="md:w-3/4 md:pl-8 text-left">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Duurzame renovatie</h3>
+                  <p className="text-gray-600">
+                    Renovatie en verduurzaming van het pand voor de toekomst, in lijn met de kernwaarde duurzaamheid.
                   </p>
                 </div>
               </div>
@@ -266,9 +305,9 @@ const AboutUs = () => {
                   <div className="text-xl font-bold text-blue-600 mt-2">Heden</div>
                 </div>
                 <div className="md:w-3/4 md:pl-8 text-left">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">Groei en toekomst</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Toekomstvisie</h3>
                   <p className="text-gray-600">
-                    Vandaag telt ons team meer dan 50 professionals en bedienen we honderden tevreden klanten. We blijven innoveren en groeien met behoud van onze kernwaarden en persoonlijke aanpak.
+                    Allround Cleaning Service blijft een betrouwbare, flexibele partner in verschillende sectoren - trouw aan de oorspronkelijke toewijding.
                   </p>
                 </div>
               </div>

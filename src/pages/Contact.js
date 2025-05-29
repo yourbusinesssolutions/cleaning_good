@@ -48,7 +48,7 @@ const Contact = () => {
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-600">
                   <MapPin size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Hoofdkantoor</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Ons kantoor</h3>
                 <p className="text-gray-600 mb-4">
                   Bezoek ons hoofdkantoor voor een persoonlijk gesprek
                 </p>
@@ -78,7 +78,7 @@ const Contact = () => {
                         <Clock size={20} className="text-blue-600 mr-3" />
                         <span className="font-medium">Maandag - Vrijdag</span>
                       </div>
-                      <span>08:00 - 17:00</span>
+                      <span>08:30 - 17:30</span>
                     </div>
                     <div className="flex justify-between items-center border-b border-gray-200 pb-4">
                       <div className="flex items-center">
@@ -97,7 +97,14 @@ const Contact = () => {
                   </div>
                 </div>
                 
-                <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-6">Locatie</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mt-10 mb-6">Werken bij ons</h2>
+                <div className="bg-gray-50 rounded-xl p-8 mb-10">
+                  <p className="text-gray-600">
+                    Bij Allround Cleaning Service bieden we CAO-conforme salarissen en uitstekende secundaire voorwaarden. We investeren in onze medewerkers met ontwikkelmogelijkheden, een positieve werkomgeving, werk-privébalans en veiligheid.
+                  </p>
+                </div>
+                
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Locatie</h2>
                 <div className="rounded-xl overflow-hidden shadow-lg h-80">
                   {/* Replace this with an actual Google Map component */}
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
