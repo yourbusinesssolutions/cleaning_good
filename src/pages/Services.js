@@ -1,5 +1,4 @@
 import { Award, CheckCircle, Shield, Sparkles } from 'lucide-react';
-import React from 'react';
 import PageHeader from '../components/PageHeader';
 import ServiceCard from '../components/ServiceCard';
 
@@ -101,7 +100,7 @@ const Services = () => {
                 </span>
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Wat maakt ons anders?</h2>
                 <p className="text-gray-700 mb-6">
-                  Bij Allround Cleaning zetten wij kwaliteit en klanttevredenheid voorop. Onze professionele aanpak onderscheidt ons van de concurrentie en zorgt ervoor dat wij consistent uitstekende resultaten leveren.
+                  Bij Allround Cleaning Service zetten wij kwaliteit en klanttevredenheid voorop. Onze professionele aanpak onderscheidt ons van de concurrentie en zorgt ervoor dat wij consistent uitstekende resultaten leveren.
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-start">

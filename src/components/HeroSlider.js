@@ -1,6 +1,5 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HeroSlider = () => {
@@ -10,7 +9,7 @@ const HeroSlider = () => {
       bgImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
       title: 'Professionele Schoonmaakdiensten',
       subtitle: 'Voor bedrijven en instellingen',
-      description: '20+ jaar ervaring in commerciële reiniging',
+      description: 'Meer dan 20 jaar ervaring, één schoon bedrijf!',
       ctaPrimary: 'Offerte aanvragen',
       ctaPrimaryLink: '/quote-request',
       ctaSecondary: 'Onze diensten',
@@ -67,7 +66,7 @@ const HeroSlider = () => {
               <div className="container mx-auto px-4 h-full flex flex-col justify-center relative z-10">
                 <div className="max-w-3xl text-white">
                   <div className="inline-block px-5 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6 animate-pulse">
-                    Professionele schoonmaak sinds 2002
+                    Één schoon bedrijf sinds 2002
                   </div>
                   <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
                     {slide.title}

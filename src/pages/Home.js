@@ -1,5 +1,4 @@
 import { Award, CheckCircle, Clock, Shield, Sparkles, Star } from 'lucide-react';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import CountItem from '../components/CountItem';
 import FeatureCard from '../components/FeatureCard';
@@ -42,7 +41,7 @@ const Home = () => {
       id: 'specialized-cleaning',
       icon: Sparkles,
       title: 'Specialistische reiniging',
-      description: 'Reiniging van moeilijke vlekken en speciale oppervlakken met professionele apparatuur en specialistische methoden.'
+      description: 'Allround Cleaning Service is gespecialiseerd in diverse vormen van specialistische reiniging. Wij bieden grondige vloerreiniging, inclusief diepe verwijdering van waslagen om vloeren volledig te herstellen. Voor bouwopleveringen zorgen wij voor een perfecte afwerking - verwijdering van bouwstof, cementresten en reiniging van ramen, kozijnen en sanitaire voorzieningen. Wij bieden ook industriële reinigingsoplossingen voor fabrieken, werkplaatsen en productieruimtes, met prioriteit voor veiligheid, hygiëne en minimale overlast. Elk project wordt uitgevoerd met professionele gereedschappen, expertise en aandacht voor detail.'
     }
   ];
 
@@ -98,7 +97,7 @@ const Home = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Waarom kiezen voor <span className="text-blue-600">Allround Cleaning</span>?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Waarom kiezen voor <span className="text-blue-600">Allround Cleaning Service</span>?</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">Wij bieden professionele schoonmaakdiensten van de hoogste kwaliteit, altijd aangepast aan uw specifieke wensen en eisen.</p>
           </div>
           
@@ -118,7 +117,7 @@ const Home = () => {
             <FeatureCard 
               icon={Sparkles} 
               title="Specialistische reiniging" 
-              description="Twijfelt u eraan of het vuil verwijderbaar is? Wij komen graag kosteloos langs om een deel van het bevuilde oppervlak schoon te maken en onze expertise te tonen."
+              description="Wij zijn gespecialiseerd in diverse vormen van specialistische reiniging. Wij bieden grondige vloerreiniging, inclusief diepe verwijdering van waslagen. Voor bouwopleveringen zorgen wij voor een perfecte afwerking - verwijdering van bouwstof, cementresten en reiniging van ramen, kozijnen en sanitaire voorzieningen."
               accentColor="green"
             />
           </div>

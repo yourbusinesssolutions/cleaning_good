@@ -1,5 +1,4 @@
 import { Facebook, Mail, Phone, Twitter, Youtube } from 'lucide-react';
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -18,7 +17,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
           <div>
-            <div className="text-3xl font-bold text-white mb-6">Allround <span className="text-blue-300">Cleaning</span></div>
+            <div className="text-3xl font-bold text-white mb-6">Allround <span className="text-blue-300">Cleaning Service</span></div>
             <p className="text-blue-200 mb-8">
               Professionele schoonmaakdiensten sinds 2002. Met toewijding en vakmanschap zorgen wij voor een schone en hygiënische omgeving voor uw bedrijf of instelling.
             </p>
@@ -128,7 +127,7 @@ const Footer = () => {
         
         <div className="border-t border-blue-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-blue-300 mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} Allround Cleaning. All Rights Reserved.
+            &copy; {new Date().getFullYear()} Allround Cleaning Service. All Rights Reserved.
           </p>
           <p className="text-blue-300">
             Powered By <span className="font-bold">Royal Lease Websites</span>

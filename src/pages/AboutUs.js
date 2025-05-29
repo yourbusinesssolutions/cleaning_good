@@ -1,5 +1,4 @@
 import { Award, Calendar, Star, Target, Users } from 'lucide-react';
-import React from 'react';
 import CountItem from '../components/CountItem';
 import PageHeader from '../components/PageHeader';
 
@@ -8,7 +7,7 @@ const AboutUs = () => {
     <>
       <PageHeader 
         title="Over Ons" 
-        subtitle="Leer meer over Allround Cleaning en onze visie op professionele schoonmaakdiensten"
+        subtitle="Leer meer over Allround Cleaning Service en onze visie op professionele schoonmaakdiensten"
         breadcrumbs={[
           { text: 'Over Ons' }
         ]}
@@ -26,7 +25,7 @@ const AboutUs = () => {
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Meer dan 20 jaar ervaring in professionele schoonmaak</h2>
                 
                 <p className="text-gray-700 mb-6">
-                  Allround Cleaning werd in 2002 opgericht met een duidelijke missie: het leveren van uitzonderlijke schoonmaakdiensten aan bedrijven en instellingen, met een onwrikbare toewijding aan kwaliteit, betrouwbaarheid en klanttevredenheid.
+                  Allround Cleaning Service werd in 2002 opgericht met een duidelijke missie: het leveren van uitzonderlijke schoonmaakdiensten aan bedrijven en instellingen, met een onwrikbare toewijding aan kwaliteit, betrouwbaarheid en klanttevredenheid.
                 </p>
                 
                 <p className="text-gray-700 mb-6">
@@ -101,7 +100,7 @@ const AboutUs = () => {
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">Waarom klanten voor ons kiezen</h2>
               <p className="text-gray-600 max-w-3xl mx-auto">
-                Bij Allround Cleaning onderscheiden we ons door onze professionele aanpak en toewijding aan klanttevredenheid
+                Bij Allround Cleaning Service onderscheiden we ons door onze professionele aanpak en toewijding aan klanttevredenheid
               </p>
             </div>
             
@@ -209,7 +208,7 @@ const AboutUs = () => {
                 <div className="md:w-3/4 md:pl-8 text-left">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">Oprichting</h3>
                   <p className="text-gray-600">
-                    Allround Cleaning werd opgericht door Jan en Petra de Vries met een kleine ploeg van 3 medewerkers, voornamelijk gericht op kantoorschoonmaak in de regio.
+                    Allround Cleaning Service werd opgericht door Jan en Petra de Vries met een kleine ploeg van 3 medewerkers, voornamelijk gericht op kantoorschoonmaak in de regio.
                   </p>
                 </div>
               </div>

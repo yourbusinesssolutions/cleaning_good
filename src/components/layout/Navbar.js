@@ -1,5 +1,5 @@
 import { ChevronDown, Menu, Star, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png";
 const Navbar = () => {
@@ -46,7 +46,7 @@ const Navbar = () => {
               <Link to="/">
                 <img 
                   src={logo}
-                  alt="Allround Cleaning Logo"
+                  alt="Allround Cleaning Service Logo"
                   className="h-16 md:h-20 w-auto"
                 />
               </Link>

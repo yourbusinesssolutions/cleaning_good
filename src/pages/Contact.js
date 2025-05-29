@@ -1,5 +1,4 @@
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
-import React from 'react';
 import ContactForm from '../components/ContactForm';
 import PageHeader from '../components/PageHeader';
 
@@ -54,8 +53,8 @@ const Contact = () => {
                   Bezoek ons hoofdkantoor voor een persoonlijk gesprek
                 </p>
                 <address className="text-blue-600 font-medium not-italic">
-                  Industrieweg 35<br />
-                  2382 NV Alphen aan den Rijn
+                  Europaweg 1<br />
+                  2411 NE Bodegraven
                 </address>
               </div>
             </div>
@@ -103,7 +102,7 @@ const Contact = () => {
                   {/* Replace this with an actual Google Map component */}
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                     <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2447.3979088220364!2d4.6560197999999995!3d52.13337!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5e6e3b3fc6f45%3A0x6d0f40e995ecab01!2sIndustrieweg%2C%20Alphen%20aan%20den%20Rijn!5e0!3m2!1sen!2snl!4v1651057212543!5m2!1sen!2snl" 
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2449.123456789012!2d4.7123456!3d52.0987654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5e6e3b3fc6f45%3A0x6d0f40e995ecab01!2sEuropaweg%201%2C%202411%20NE%20Bodegraven!5e0!3m2!1sen!2snl!4v1651057212543!5m2!1sen!2snl" 
                       width="100%" 
                       height="100%" 
                       style={{ border: 0 }} 

@@ -1,5 +1,5 @@
 import { Award, Briefcase, CheckCircle, Mail, Phone, Send, Users, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import HRService from '../services/hrService';
 
@@ -200,7 +200,7 @@ const WorkWithUs = () => {
   return (
     <>
       <PageHeader 
-        title="Werken bij Allround Cleaning" 
+        title="Werken bij Allround Cleaning Service" 
         subtitle="Word onderdeel van ons team en help ons om onze klanten de beste schoonmaakdiensten te bieden"
         breadcrumbs={[
           { text: 'Werken bij' }
@@ -212,9 +212,9 @@ const WorkWithUs = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">Waarom werken bij Allround Cleaning?</h2>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Waarom werken bij Allround Cleaning Service?</h2>
               <p className="text-gray-600 max-w-3xl mx-auto">
-                Bij Allround Cleaning bieden we niet alleen uitstekende diensten aan onze klanten, maar zorgen we ook goed voor onze medewerkers. We geloven dat tevreden medewerkers leiden tot tevreden klanten.
+                Bij Allround Cleaning Service bieden we niet alleen uitstekende diensten aan onze klanten, maar zorgen we ook goed voor onze medewerkers. We geloven dat tevreden medewerkers leiden tot tevreden klanten.
               </p>
             </div>
             
@@ -319,11 +319,11 @@ const WorkWithUs = () => {
                   0172-645574
                 </a>
                 <a 
-                  href="mailto:hr@allround-cleaning.nl" 
+                  href="mailto:info@allround-cleaning.nl" 
                   className="flex items-center justify-center bg-white border border-gray-300 hover:border-blue-600 hover:text-blue-600 px-6 py-3 rounded-md font-medium transition-all"
                 >
                   <Mail size={20} className="mr-2" />
-                  hr@allround-cleaning.nl
+                  info@allround-cleaning.nl
                 </a>
               </div>
             </div>
