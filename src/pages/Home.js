@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import CountItem from '../components/CountItem';
 import FeatureCard from '../components/FeatureCard';
 import HeroSlider from '../components/HeroSlider';
+import PartnersSlider from '../components/PartnersSlider';
 import ServiceCard from '../components/ServiceCard';
 
 const Home = () => {
@@ -205,15 +206,7 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="transform transition-all duration-300 hover:scale-105">
-                <div className="bg-white shadow-lg rounded-xl p-6 h-40 flex items-center justify-center">
-                  <img src={`https://via.placeholder.com/200x100?text=Partner+${item}`} alt={`Partner ${item}`} className="max-h-full" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <PartnersSlider />
           
           <div className="mt-16 text-center">
             <div className="inline-flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
