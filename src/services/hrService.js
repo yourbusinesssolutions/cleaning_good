@@ -38,10 +38,7 @@ class HRService {
         formData.append('vacancy_title', data.vacancy_title);
       }
       
-      // Handle file upload
-      if (data.cv_file) {
-        formData.append('cv_file', data.cv_file);
-      }
+      // CV upload removed - no longer required
       
       return await ApiService.post('/hr/applications/', formData, true);
     } catch (error) {

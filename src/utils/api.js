@@ -6,10 +6,14 @@ class ApiService {
     const config = {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
         ...(options.headers || {}),
       },
     };
+
+    // Only set Content-Type if not FormData (browser sets it automatically with boundary for FormData)
+    if (!options.skipContentType) {
+      config.headers['Content-Type'] = 'application/json';
+    }
 
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
@@ -35,8 +39,8 @@ class ApiService {
   static post(endpoint, data, isFormData = false) {
     const config = {
       method: 'POST',
-      ...(isFormData 
-        ? { body: data, headers: {} } 
+      ...(isFormData
+        ? { body: data, skipContentType: true }
         : { body: JSON.stringify(data) }
       ),
     };

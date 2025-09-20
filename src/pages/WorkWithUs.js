@@ -14,8 +14,7 @@ const WorkWithUs = () => {
     phone: '',
     vacancy: '',
     vacancy_title: '',
-    message: '',
-    cv_file: null
+    message: ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
@@ -58,15 +57,7 @@ const WorkWithUs = () => {
     }
   };
   
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData(prev => ({
-        ...prev,
-        cv_file: file
-      }));
-    }
-  };
+  // File upload handler removed - CV no longer required
   
   const validateForm = () => {
     const newErrors = {};
@@ -85,9 +76,7 @@ const WorkWithUs = () => {
       newErrors.phone = 'Telefoonnummer is verplicht';
     }
     
-    if (!formData.cv_file) {
-      newErrors.cv_file = 'Upload uw CV';
-    }
+    // CV is now optional - removed validation
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -107,7 +96,6 @@ const WorkWithUs = () => {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          cv_file: formData.cv_file,
           vacancy: activeVacancy?.id || null,
           vacancy_title: activeVacancy?.title || 'Open sollicitatie'
         };
@@ -125,8 +113,7 @@ const WorkWithUs = () => {
             phone: '',
             vacancy: '',
             vacancy_title: '',
-            message: '',
-            cv_file: null
+            message: ''
           });
           setFormSubmitted(false);
           closeVacancy();
@@ -482,22 +469,7 @@ const WorkWithUs = () => {
                       ></textarea>
                     </div>
                     
-                    <div>
-                      <label htmlFor="cv_file" className="block text-gray-700 font-medium mb-2">
-                        CV uploaden <span className="text-red-500">*</span>
-                      </label>
-                      <div className={`w-full px-4 py-3 border ${errors.cv_file ? 'border-red-500' : 'border-gray-300'} rounded-lg`}>
-                        <input
-                          type="file"
-                          id="cv_file"
-                          onChange={handleFileChange}
-                          className="text-gray-700"
-                          accept=".pdf,.doc,.docx"
-                        />
-                      </div>
-                      <p className="text-gray-500 text-sm mt-1">Toegestane formaten: PDF, DOC, DOCX (max. 5MB)</p>
-                      {errors.cv_file && <p className="text-red-500 text-sm mt-1">{errors.cv_file}</p>}
-                    </div>
+                    {/* CV upload removed - no longer required */}
                     
                     {apiError && (
                       <div className="bg-red-50 border-l-4 border-red-400 p-4">
