@@ -1,8 +1,10 @@
 import { CheckCircle, Send } from 'lucide-react';
 import React, { useState } from 'react';
+import { useToast } from '../contexts/ToastContext';
 import ContactService from '../services/contactService';
 
 const ContactForm = () => {
+  const { showSuccess, showError } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -80,7 +82,23 @@ const ContactForm = () => {
       });
     } catch (error) {
       console.error('Error submitting form:', error);
-      setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+
+      // Handle 502 error specially
+      if (error.response?.status === 502) {
+        showSuccess('Uw bericht is waarschijnlijk ontvangen! We nemen zo spoedig mogelijk contact met u op.');
+        setSubmitted(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        const errorMessage = error.response?.data?.message || 'Er is een fout opgetreden. Probeer het later opnieuw.';
+        setApiError(errorMessage);
+        showError(errorMessage);
+      }
     } finally {
       setIsSubmitting(false);
     }

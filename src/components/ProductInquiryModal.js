@@ -1,9 +1,11 @@
 // src/components/ProductInquiryModal.js
 import { CheckCircle, Send, X } from 'lucide-react';
 import React, { useState } from 'react';
+import { useToast } from '../contexts/ToastContext';
 import ProductService from '../services/productService';
 
 const ProductInquiryModal = ({ isOpen, onClose, product }) => {
+  const { showSuccess, showError } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -93,7 +95,27 @@ const ProductInquiryModal = ({ isOpen, onClose, product }) => {
       }, 3000);
       
     } catch (error) {
-      setErrors({ submit: 'Er is een fout opgetreden. Probeer het later opnieuw.' });
+      // Handle 502 error specially
+      if (error.response?.status === 502) {
+        showSuccess('Uw aanvraag is waarschijnlijk ontvangen! We nemen binnen 24 uur contact met u op.');
+        setIsSuccess(true);
+        setTimeout(() => {
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            company: '',
+            quantity: 1,
+            message: ''
+          });
+          setIsSuccess(false);
+          onClose();
+        }, 3000);
+      } else {
+        const errorMessage = error.response?.data?.message || 'Er is een fout opgetreden. Probeer het later opnieuw.';
+        setErrors({ submit: errorMessage });
+        showError(errorMessage);
+      }
     } finally {
       setIsSubmitting(false);
     }

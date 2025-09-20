@@ -1,8 +1,10 @@
 import { CheckCircle, Send } from 'lucide-react';
 import React, { useState } from 'react';
+import { useToast } from '../contexts/ToastContext';
 import ContactService from '../services/contactService';
 
 const QuoteForm = () => {
+  const { showSuccess, showError } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -88,7 +90,24 @@ const QuoteForm = () => {
       });
     } catch (error) {
       console.error('Error submitting form:', error);
-      setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+
+      // Handle 502 error specially
+      if (error.response?.status === 502) {
+        showSuccess('Uw offerte aanvraag is waarschijnlijk ontvangen! We nemen binnen 24 uur contact met u op.');
+        setSubmitted(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          service_type: '',
+          message: ''
+        });
+      } else {
+        const errorMessage = error.response?.data?.message || 'Er is een fout opgetreden. Probeer het later opnieuw.';
+        setApiError(errorMessage);
+        showError(errorMessage);
+      }
     } finally {
       setIsSubmitting(false);
     }
