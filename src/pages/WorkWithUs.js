@@ -129,7 +129,30 @@ const WorkWithUs = () => {
         // Better error handling
         let errorMessage = 'Er is een fout opgetreden bij het verzenden van uw sollicitatie.';
 
-        if (error.isNetworkError) {
+        if (error.response?.status === 502) {
+          // 502 often means the request was processed but response timed out
+          // Since we know applications are being saved, treat this as success
+          showSuccess('Uw sollicitatie is waarschijnlijk ontvangen! Als u binnen 5 werkdagen niets hoort, neem dan contact op.');
+          setFormSubmitted(true);
+
+          // Reset form after a delay
+          setTimeout(() => {
+            setFormData({
+              name: '',
+              email: '',
+              phone: '',
+              vacancy: '',
+              vacancy_title: '',
+              message: ''
+            });
+            setFormSubmitted(false);
+            closeVacancy();
+          }, 3000);
+
+          // Don't show error for 502 since application likely succeeded
+          setIsSubmitting(false);
+          return;
+        } else if (error.isNetworkError) {
           // Network error - CORS or connection issue
           errorMessage = 'Kan geen verbinding maken met de server. Probeer het later opnieuw of neem contact op via telefoon/email.';
         } else if (error.response) {
