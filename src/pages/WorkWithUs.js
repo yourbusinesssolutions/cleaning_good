@@ -1,9 +1,11 @@
 import { Award, Briefcase, CheckCircle, Mail, Phone, Send, Users, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PageHeader from '../components/PageHeader';
+import { useToast } from '../contexts/ToastContext';
 import HRService from '../services/hrService';
 
 const WorkWithUs = () => {
+  const { showSuccess, showError, showInfo } = useToast();
   const [vacancies, setVacancies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,7 +36,9 @@ const WorkWithUs = () => {
       const vacanciesData = response.results || response;
       setVacancies(vacanciesData);
     } catch (err) {
-      setError('Failed to load vacancies');
+      const errorMsg = 'Er is een fout opgetreden bij het laden van vacatures';
+      setError(errorMsg);
+      showError(errorMsg);
       console.error(err);
     } finally {
       setLoading(false);
@@ -101,10 +105,11 @@ const WorkWithUs = () => {
         };
         
         await HRService.submitApplication(applicationData);
-        
+
         // Show success message
+        showSuccess('Uw sollicitatie is succesvol verzonden! We nemen binnen 5 werkdagen contact met u op.');
         setFormSubmitted(true);
-        
+
         // Reset form after submission
         setTimeout(() => {
           setFormData({
@@ -120,7 +125,34 @@ const WorkWithUs = () => {
         }, 3000);
       } catch (error) {
         console.error('Error submitting application:', error);
-        setApiError('Er is een fout opgetreden. Probeer het later opnieuw.');
+
+        // Better error handling
+        let errorMessage = 'Er is een fout opgetreden bij het verzenden van uw sollicitatie.';
+
+        if (error.isNetworkError) {
+          // Network error - CORS or connection issue
+          errorMessage = 'Kan geen verbinding maken met de server. Probeer het later opnieuw of neem contact op via telefoon/email.';
+        } else if (error.response) {
+          // Server responded with error
+          if (error.response.status === 400) {
+            errorMessage = 'Controleer of alle verplichte velden correct zijn ingevuld.';
+          } else if (error.response.status === 500) {
+            errorMessage = 'Er is een serverfout opgetreden. Probeer het later opnieuw.';
+          } else if (error.response.data?.detail) {
+            errorMessage = error.response.data.detail;
+          } else if (error.response.data?.message) {
+            errorMessage = error.response.data.message;
+          }
+        } else if (error.request) {
+          // Request was made but no response
+          errorMessage = 'Kan geen verbinding maken met de server. Controleer uw internetverbinding.';
+        } else {
+          // Something else happened
+          errorMessage = error.message || errorMessage;
+        }
+
+        setApiError(errorMessage);
+        showError(errorMessage);
       } finally {
         setIsSubmitting(false);
       }
