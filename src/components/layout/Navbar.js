@@ -1,11 +1,13 @@
-import { ChevronDown, Menu, Star, X } from 'lucide-react';
+import { ChevronDown, Menu, ShoppingCart, Star, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from "../../assets/images/logo.png";
+import { useCart } from '../../contexts/CartContext';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { getCartItemCount } = useCart();
 
   // Service dropdown items
   const serviceItems = [
@@ -95,8 +97,19 @@ const Navbar = () => {
               <Link to="/work-with-us" className={`font-medium ${location.pathname === '/work-with-us' ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}>
                 Werken bij
               </Link>
-              <Link 
-                to="/quote-request" 
+              <Link
+                to="/cart"
+                className="relative text-gray-700 hover:text-blue-600 transition-colors"
+              >
+                <ShoppingCart size={24} />
+                {getCartItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    {getCartItemCount()}
+                  </span>
+                )}
+              </Link>
+              <Link
+                to="/quote-request"
                 className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-6 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 font-medium"
               >
                 Offerte aanvraag
@@ -133,6 +146,15 @@ const Navbar = () => {
                 <Link to="/about-us" className="text-gray-700 py-2 font-medium">Over Ons</Link>
                 <Link to="/contact" className="text-gray-700 py-2 font-medium">Contact</Link>
                 <Link to="/work-with-us" className="text-gray-700 py-2 font-medium">Werken bij</Link>
+                <Link to="/cart" className="text-gray-700 py-2 font-medium flex items-center gap-2">
+                  <ShoppingCart size={20} />
+                  Winkelwagen
+                  {getCartItemCount() > 0 && (
+                    <span className="bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {getCartItemCount()}
+                    </span>
+                  )}
+                </Link>
                 <Link to="/quote-request" className="bg-blue-600 text-white px-4 py-2 rounded-md text-center font-medium">Offerte aanvraag</Link>
                 <div className="flex items-center gap-2 py-2">
                   <div className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">CERTIFIED</div>

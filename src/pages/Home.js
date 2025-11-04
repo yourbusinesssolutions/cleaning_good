@@ -173,22 +173,6 @@ const Home = () => {
               </div>
             </div>
             
-            <div className="mt-16 bg-blue-50 rounded-2xl p-8 border-l-4 border-blue-600">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/4 flex justify-center mb-6 md:mb-0">
-                  <Sparkles size={80} className="text-blue-600" />
-                </div>
-                <div className="md:w-3/4">
-                  <h3 className="text-xl font-bold text-blue-700 mb-4">Moeilijke vlekken en specialistische reiniging?</h3>
-                  <p className="text-gray-700 mb-4">
-                    Twijfelt u eraan of het vuil verwijderbaar is? Allround Cleaning Service komt graag, geheel vrijblijvend, bij u langs om een deel van het bevuilde oppervlak kosteloos schoon te maken. 
-                  </p>
-                  <p className="text-gray-700">
-                    Wij tonen dan onze expertise in het schoonmaken nog voordat u een offerte heeft aangevraagd, en daarmee bent u verzekerd van een succesvol schoonmaakproject.
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

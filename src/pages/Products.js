@@ -1,8 +1,8 @@
 // src/pages/Products.js
 import { Filter, Search } from 'lucide-react';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
-import ProductInquiryModal from '../components/ProductInquiryModal';
 import { useProducts } from '../hooks/useProducts';
 
 const Products = () => {
@@ -10,8 +10,6 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('name');
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
 
   const { products, categories, loading, error, totalCount } = useProducts({
     category: selectedCategory,
@@ -19,16 +17,6 @@ const Products = () => {
     price_range: priceRange,
     ordering: sortBy
   });
-
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    setIsInquiryModalOpen(true);
-  };
-
-  const handleInquiryClose = () => {
-    setIsInquiryModalOpen(false);
-    setSelectedProduct(null);
-  };
 
   // Function to truncate text to a certain number of lines
   const truncateDescription = (text) => {
@@ -230,35 +218,34 @@ const Products = () => {
                         <div className="h-20 overflow-hidden mb-4">
                           <p className="text-gray-600 text-sm">{truncateDescription(product.description)}</p>
                           {product.description && product.description.length > 140 && (
-                            <button 
-                              onClick={() => handleProductClick(product)} 
-                              className="text-blue-600 hover:text-blue-800 text-sm font-medium mt-1"
+                            <Link
+                              to={`/products/${product.id}`}
+                              className="text-blue-600 hover:text-blue-800 text-sm font-medium mt-1 inline-block"
                             >
                               Lees meer...
-                            </button>
+                            </Link>
                           )}
                         </div>
                         <div className="flex justify-between items-center mb-4">
                           <span className="text-2xl font-bold text-blue-600">€{parseFloat(product.price).toFixed(2)}</span>
                           <span className={`text-sm px-2 py-1 rounded-full ${
-                            product.in_stock 
-                              ? 'bg-green-100 text-green-700' 
+                            product.in_stock
+                              ? 'bg-green-100 text-green-700'
                               : 'bg-red-100 text-red-700'
                           }`}>
                             {product.in_stock ? 'Op voorraad' : 'Uitverkocht'}
                           </span>
                         </div>
-                        <button 
-                          className={`w-full py-2 px-4 rounded-lg font-medium transition-all ${
+                        <Link
+                          to={`/products/${product.id}`}
+                          className={`w-full py-2 px-4 rounded-lg font-medium transition-all block text-center ${
                             product.in_stock
                               ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                              : 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
                           }`}
-                          disabled={!product.in_stock}
-                          onClick={() => handleProductClick(product)}
                         >
                           {product.in_stock ? 'Meer informatie' : 'Niet beschikbaar'}
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ))}
@@ -313,14 +300,6 @@ const Products = () => {
         </div>
       </section>
 
-      {/* Product Inquiry Modal */}
-      {selectedProduct && (
-        <ProductInquiryModal
-          isOpen={isInquiryModalOpen}
-          onClose={handleInquiryClose}
-          product={selectedProduct}
-        />
-      )}
     </>
   );
 };

@@ -63,12 +63,6 @@ const QuoteRequest = () => {
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 rounded-lg p-6 border-l-4 border-blue-600">
-                  <h3 className="text-lg font-bold text-gray-800 mb-3">Moeilijke vlekken?</h3>
-                  <p className="text-gray-600">
-                    Twijfelt u of het vuil verwijderbaar is? Wij komen graag kosteloos bij u langs om een deel van het bevuilde oppervlak schoon te maken, zodat u zich verzekerd weet van een succesvol schoonmaakproject.
-                  </p>
-                </div>
               </div>
               
               <div className="bg-white rounded-xl shadow-xl p-8">
