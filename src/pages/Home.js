@@ -52,21 +52,21 @@ const Home = () => {
       <HeroSlider />
       
       {/* Services Section - MOVED UP */}
-      <section id="diensten" className="py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600 skew-y-3 transform origin-top-right"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600"></div>
+      <section id="diensten" className="py-20 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-500 skew-y-3 transform origin-top-right"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-500"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <span className="inline-block px-4 py-1 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-4">
               PROFESSIONELE DIENSTEN
             </span>
             <h2 className="text-4xl font-bold text-white mb-4">Onze Diensten</h2>
-            <p className="text-blue-100 max-w-2xl mx-auto">
+            <p className="text-white text-opacity-90 max-w-2xl mx-auto">
               Wij bieden een compleet pakket aan schoonmaakdiensten, altijd afgestemd op uw wensen en behoeften.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {services.map(service => (
               <ServiceCard
                 key={service.id}
@@ -78,11 +78,11 @@ const Home = () => {
               />
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <Link 
-              to="/services" 
-              className="inline-flex items-center bg-white text-blue-500 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
+
+          <div className="text-center mt-10">
+            <Link
+              to="/services"
+              className="inline-flex items-center bg-white text-blue-500 hover:bg-blue-50 px-8 py-3 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
             >
               <span className="mr-2">Bekijk alle diensten</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

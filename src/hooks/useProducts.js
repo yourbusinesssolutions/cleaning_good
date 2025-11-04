@@ -15,7 +15,7 @@ export const useProducts = (filters = {}) => {
 
   useEffect(() => {
     fetchProducts();
-  }, [filters.category, filters.search, filters.price_range, filters.ordering]);
+  }, [filters.category, filters.search, filters.price_range, filters.ordering, filters.page]);
 
   const fetchCategories = async () => {
     try {
@@ -56,9 +56,12 @@ export const useProducts = (filters = {}) => {
         params.price_range = filters.price_range;
       }
       if (filters.ordering) {
-        params.ordering = filters.ordering === 'price-low' ? 'price' : 
-                         filters.ordering === 'price-high' ? '-price' : 
+        params.ordering = filters.ordering === 'price-low' ? 'price' :
+                         filters.ordering === 'price-high' ? '-price' :
                          'name';
+      }
+      if (filters.page) {
+        params.page = filters.page;
       }
 
       const response = await ProductService.getProducts(params);

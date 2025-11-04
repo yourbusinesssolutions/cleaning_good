@@ -1,6 +1,6 @@
 // src/pages/Products.js
 import { Filter, Search } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import { useProducts } from '../hooks/useProducts';
@@ -10,13 +10,24 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [priceRange, setPriceRange] = useState('all');
   const [sortBy, setSortBy] = useState('name');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { products, categories, loading, error, totalCount } = useProducts({
     category: selectedCategory,
     search: searchTerm,
     price_range: priceRange,
-    ordering: sortBy
+    ordering: sortBy,
+    page: currentPage
   });
+
+  // Calculate pagination from backend response
+  const productsPerPage = 12; // Backend default page size
+  const totalPages = Math.ceil(totalCount / productsPerPage);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchTerm, priceRange, sortBy]);
 
   // Function to truncate text to a certain number of lines
   const truncateDescription = (text) => {
@@ -171,7 +182,7 @@ const Products = () => {
               <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <p className="text-gray-600">
-                    {loading ? 'Producten laden...' : `${totalCount} producten gevonden`}
+                    {loading ? 'Producten laden...' : `${totalCount} producten gevonden (Pagina ${currentPage} van ${totalPages})`}
                   </p>
                   <div className="flex items-center gap-2">
                     <label className="text-sm text-gray-600">Sorteer op:</label>
@@ -203,6 +214,7 @@ const Products = () => {
                   ))}
                 </div>
               ) : (
+                <>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {products.map(product => (
                     <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
@@ -250,8 +262,70 @@ const Products = () => {
                     </div>
                   ))}
                 </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                  <div className="mt-8 flex justify-center items-center gap-2">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                        currentPage === 1
+                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-white text-blue-600 hover:bg-blue-50 shadow-md'
+                      }`}
+                    >
+                      Vorige
+                    </button>
+
+                    <div className="flex gap-1">
+                      {[...Array(totalPages)].map((_, index) => {
+                        const pageNumber = index + 1;
+                        // Show first page, last page, current page, and pages around current
+                        if (
+                          pageNumber === 1 ||
+                          pageNumber === totalPages ||
+                          (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                        ) {
+                          return (
+                            <button
+                              key={pageNumber}
+                              onClick={() => setCurrentPage(pageNumber)}
+                              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                                currentPage === pageNumber
+                                  ? 'bg-blue-600 text-white'
+                                  : 'bg-white text-gray-700 hover:bg-blue-50 shadow-md'
+                              }`}
+                            >
+                              {pageNumber}
+                            </button>
+                          );
+                        } else if (
+                          pageNumber === currentPage - 2 ||
+                          pageNumber === currentPage + 2
+                        ) {
+                          return <span key={pageNumber} className="px-2 py-2 text-gray-400">...</span>;
+                        }
+                        return null;
+                      })}
+                    </div>
+
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                        currentPage === totalPages
+                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          : 'bg-white text-blue-600 hover:bg-blue-50 shadow-md'
+                      }`}
+                    >
+                      Volgende
+                    </button>
+                  </div>
+                )}
+                </>
               )}
-              
+
               {!loading && products.length === 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                   <p className="text-gray-600 text-lg">
