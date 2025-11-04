@@ -82,6 +82,28 @@ class ApiService {
     };
     return this.request(endpoint, config);
   }
+
+  static put(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  static patch(endpoint, data) {
+    return this.request(endpoint, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  static delete(endpoint, data = null) {
+    const config = { method: 'DELETE' };
+    if (data) {
+      config.body = JSON.stringify(data);
+    }
+    return this.request(endpoint, config);
+  }
 }
 
 export default ApiService;

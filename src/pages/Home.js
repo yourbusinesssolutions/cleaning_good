@@ -66,9 +66,9 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {services.map(service => (
-              <ServiceCard 
+              <ServiceCard
                 key={service.id}
                 icon={service.icon}
                 title={service.title}
@@ -82,7 +82,7 @@ const Home = () => {
           <div className="text-center mt-12">
             <Link 
               to="/services" 
-              className="inline-flex items-center bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
+              className="inline-flex items-center bg-white text-blue-500 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg"
             >
               <span className="mr-2">Bekijk alle diensten</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -98,7 +98,7 @@ const Home = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Waarom kiezen voor <span className="text-blue-600">Allround Cleaning Service</span>?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Waarom kiezen voor <span className="text-blue-500">Allround Cleaning Service</span>?</h2>
             <p className="text-gray-600 max-w-3xl mx-auto">Wij bieden professionele schoonmaakdiensten van de hoogste kwaliteit, altijd aangepast aan uw specifieke wensen en eisen.</p>
           </div>
           
@@ -139,7 +139,7 @@ const Home = () => {
         <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-50 rounded-l-full opacity-70"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-1 bg-blue-100 text-blue-500 rounded-full text-sm font-medium mb-4">
               ONS PROCES
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Hoe stellen wij een offerte op?</h2>
@@ -151,22 +151,22 @@ const Home = () => {
           <div className="max-w-5xl mx-auto">
             <div className="grid md:grid-cols-3 gap-10">
               <div className="bg-white rounded-xl shadow-lg p-8 relative hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">1</div>
-                <h3 className="text-xl font-bold text-blue-600 mb-4 mt-4 text-center">Contact</h3>
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">1</div>
+                <h3 className="text-xl font-bold text-blue-500 mb-4 mt-4 text-center">Contact</h3>
                 <p className="text-gray-600">
                   Zodra wij uw aanvraag voor een offerte hebben ontvangen, nemen wij binnen 24 uur contact met u op voor een eerste gesprek.
                 </p>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-8 relative hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">2</div>
-                <h3 className="text-xl font-bold text-blue-600 mb-4 mt-4 text-center">Inventarisatie</h3>
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">2</div>
+                <h3 className="text-xl font-bold text-blue-500 mb-4 mt-4 text-center">Inventarisatie</h3>
                 <p className="text-gray-600">
                   In de meeste gevallen wordt een bezoek ingepland. Samen met u stellen wij een specifieke lijst op met uw wensen en vereisten.
                 </p>
               </div>
               <div className="bg-white rounded-xl shadow-lg p-8 relative hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">3</div>
-                <h3 className="text-xl font-bold text-blue-600 mb-4 mt-4 text-center">Offerte</h3>
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">3</div>
+                <h3 className="text-xl font-bold text-blue-500 mb-4 mt-4 text-center">Offerte</h3>
                 <p className="text-gray-600">
                   Na de inventarisatie ontvangt u binnen 5 werkdagen onze gedetailleerde offerte met een passende prijsopgave.
                 </p>
@@ -181,7 +181,7 @@ const Home = () => {
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+            <span className="inline-block px-4 py-1 bg-blue-100 text-blue-500 rounded-full text-sm font-medium mb-4">
               VERTROUWDE MERKEN
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Onze Partners</h2>
@@ -194,18 +194,18 @@ const Home = () => {
           
           <div className="mt-16 text-center">
             <div className="inline-flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
-              <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">Professionele producten</div>
-              <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">Milieuvriendelijk</div>
-              <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">Duurzame materialen</div>
-              <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">Hoogwaardige apparatuur</div>
-              <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium">Innovatieve technologieën</div>
+              <div className="bg-blue-50 text-blue-500 px-4 py-2 rounded-full text-sm font-medium">Professionele producten</div>
+              <div className="bg-blue-50 text-blue-500 px-4 py-2 rounded-full text-sm font-medium">Milieuvriendelijk</div>
+              <div className="bg-blue-50 text-blue-500 px-4 py-2 rounded-full text-sm font-medium">Duurzame materialen</div>
+              <div className="bg-blue-50 text-blue-500 px-4 py-2 rounded-full text-sm font-medium">Hoogwaardige apparatuur</div>
+              <div className="bg-blue-50 text-blue-500 px-4 py-2 rounded-full text-sm font-medium">Innovatieve technologieën</div>
             </div>
           </div>
         </div>
       </section>
       
       {/* CTA/Quote Request Section - UPDATED WITH 24-HOUR RESPONSE TIME */}
-      <section className="py-20 bg-blue-600">
+      <section className="py-20 bg-blue-500">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Klaar om samen te werken?</h2>
@@ -216,15 +216,15 @@ const Home = () => {
               <strong>Binnen 24 uur reactie</strong> op uw offerte aanvraag!
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Link 
-                to="/quote-request" 
-                className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg text-center"
+              <Link
+                to="/quote-request"
+                className="bg-white text-blue-500 hover:bg-blue-50 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 shadow-lg text-center"
               >
                 Offerte aanvragen
               </Link>
-              <Link 
-                to="/contact" 
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 text-center"
+              <Link
+                to="/contact"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-500 px-8 py-4 rounded-md font-medium transition-all transform hover:scale-105 text-center"
               >
                 Neem contact op
               </Link>
