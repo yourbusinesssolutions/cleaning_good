@@ -156,12 +156,12 @@ const Products = () => {
                 <p className="mb-4 text-blue-100">
                   Onze experts helpen u graag bij het kiezen van de juiste producten voor uw bedrijf.
                 </p>
-                <a 
-                  href="/contact" 
+                <Link
+                  to="/contact"
                   className="bg-white text-blue-700 hover:bg-blue-50 px-4 py-2 rounded-md font-medium transition-all inline-block w-full text-center"
                 >
                   Contact opnemen
-                </a>
+                </Link>
               </div>
             </aside>
             
@@ -283,18 +283,18 @@ const Products = () => {
               Voor zakelijke bestellingen en grootafnemers bieden wij speciale kortingen. Neem contact op voor een offerte op maat.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a 
-                href="/contact" 
-                className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-md font-medium transition-all"
+              <Link
+                to="/contact"
+                className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-md font-medium transition-all text-center"
               >
                 Contact opnemen
-              </a>
-              <a 
-                href="/quote-request" 
-                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-md font-medium transition-all"
+              </Link>
+              <Link
+                to="/quote-request"
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-md font-medium transition-all text-center"
               >
                 Offerte aanvragen
-              </a>
+              </Link>
             </div>
           </div>
         </div>
